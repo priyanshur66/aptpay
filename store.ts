@@ -1,19 +1,20 @@
 import { create } from "zustand";
-import { persist, createJSONStorage } from "zustand/middleware";
-interface PublicKeyState {
+
+interface User {
+  email: string | null;
   publicKey: string;
+}
+
+interface UserState {
+  user: User | null;
+  setUser: (user: User | null) => void;
   setPublicKey: (key: string) => void;
 }
 
-export const usePublicKey = create<PublicKeyState>()(
-  persist(
-    (set) => ({
-      publicKey: "",
-      setPublicKey: (key) => set({ publicKey: key }),
-    }),
-    {
-      name: "public-key-storage",
-      storage: createJSONStorage(() => localStorage),
-    }
-  )
-);
+export const useUserStore = create<UserState>((set) => ({
+  user: null,
+  setUser: (user) => set({ user }),
+  setPublicKey: (key) => set((state) => ({
+    user: state.user ? { ...state.user, publicKey: key } : null,
+  })),
+}));
