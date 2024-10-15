@@ -29,11 +29,10 @@ function Auth() {
   });
 
   return (
-    <div>
-      auth
-      <div>
-        <button onClick={signInWithGoogle}>sign up with google </button>
-        <button onClick={logout}>logout </button>
+    <div >
+      <div className="text-center flex justify-center flex-col">
+        <button className="border" onClick={signInWithGoogle}>sign up with google </button>
+        <button className="" onClick={logout}>logout </button>
       </div>
     </div>
   );

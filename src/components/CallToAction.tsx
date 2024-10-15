@@ -16,7 +16,7 @@ export const CallToAction = () => {
   const translateY = useTransform(scrollYProgress, [0, 1], [50, -50]);
   
   return (
-    <div className="bg-black text-white py-[72px] sm:py-24" ref={containerRef}>
+    <div className="bg-black text-white py-[72px] sm:py-24 " ref={containerRef}>
       
       <div className="container max-w-xl relative">
       <motion.div style={{translateY}}>
