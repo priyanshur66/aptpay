@@ -62,7 +62,9 @@ export default function DiscountSuccessPage() {
     try {
       //const sender = new AptosAccount(privateKey);
       const sender = new AptosAccount(
-        HexString.ensure(user.dpk).toUint8Array()
+        HexString.ensure(
+          process.env.NEXT_PUBLIC_PAYMENT_FACILITATOR
+        ).toUint8Array()
       );
       const amountInOctas = BigInt(Math.floor(2 * 100000000)); // Convert to Octas
       console.log(paymentInfo.address);

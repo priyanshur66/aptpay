@@ -33,7 +33,7 @@ export default function PaymentPage() {
   const { paymentInfo, setPaymentAddress, setPaymentToken, setPaymentAmount } = usePaymentInfoStore();
 
   const handleCopyAddress = () => {
-    navigator.clipboard.writeText(walletAddress);
+    navigator.clipboard.writeText(user.publicKey);
     alert("Wallet address copied!");
   };
 
@@ -55,7 +55,7 @@ export default function PaymentPage() {
     const fetchTransactions = async () => {
       try {
         const response = await fetch(
-          "https://fullnode.testnet.aptoslabs.com/v1/accounts/0x3c2741892f6662acc186ff1d8447ba6caf19371aeb6a56d23489d3dfd39cef0a/transactions?limit=10"
+          `https://fullnode.testnet.aptoslabs.com/v1/accounts/${user.publicKey}/transactions?limit=10`
         );
         const data = await response.json();
         setTransactions(data);
@@ -128,7 +128,7 @@ export default function PaymentPage() {
               <div className="grid gap-4 items-center justify-items-center">
                 <QrCode className="h-32 w-32" />
                 <div className="flex items-center space-x-2">
-                  <span className="text-sm">{trimAddress(walletAddress)}</span>
+                  <span className="text-sm">{trimAddress(user.publicKey)}</span>
                   <Button
                     variant="ghost"
                     size="icon"

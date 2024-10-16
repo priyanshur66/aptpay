@@ -1,54 +1,55 @@
-'use client'
+"use client";
 
-import { useState, useEffect, useRef } from 'react'
-import { motion } from 'framer-motion'
-import Script from 'next/script'
-import { useRouter } from 'next/navigation'
+import { useState, useEffect, useRef } from "react";
+import { motion } from "framer-motion";
+import Script from "next/script";
+import { useRouter } from "next/navigation";
 import { useUserStore, usePaymentInfoStore } from "../../../store";
 
 // Placeholder hooks instead of usePaymentAmount and usePromotionalVideoUrlState
 const usePaymentAmount = () => ({ paymentAmount: 80 }); // Mock function for paymentAmount
-const usePromotionalVideoUrlState = () => ({ promotionalVideoUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ" }); // Mock function for promotionalVideoUrl
+const usePromotionalVideoUrlState = () => ({
+  promotionalVideoUrl: "https://www.youtube.com/watch?v=VGcmWJxz1oQ",
+}); // Mock function for promotionalVideoUrl
 
 export default function Component() {
-  const router = useRouter()
-  const [originalPrice] = useState(80)
-  const [videoLoaded, setVideoLoaded] = useState(false)
-  const [isPlaying, setIsPlaying] = useState(false)
-  const playerRef = useRef(null)
+  const router = useRouter();
+  const [originalPrice] = useState(80);
+  const [videoLoaded, setVideoLoaded] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const playerRef = useRef(null);
 
   const { paymentAmount } = usePaymentAmount();
-  const { promotionalVideoUrl } = usePromotionalVideoUrlState()
+  const { promotionalVideoUrl } = usePromotionalVideoUrlState();
   const { paymentInfo, setPaymentAddress, setPaymentToken, setPaymentAmount } =
-  usePaymentInfoStore();
-  console.log("promotionalVideoUrl", promotionalVideoUrl)
-  
+    usePaymentInfoStore();
+  console.log("promotionalVideoUrl", promotionalVideoUrl);
+
   function getVideoID(url) {
-    const regex = /(?:https?:\/\/)?(?:www\.)?youtube\.com\/watch\?v=([^&]+)|youtu\.be\/([^?&]+)/;
+    const regex =
+      /(?:https?:\/\/)?(?:www\.)?youtube\.com\/watch\?v=([^&]+)|youtu\.be\/([^?&]+)/;
     const match = url.match(regex);
-    return match ? (match[1] || match[2]) : null;
+    return match ? match[1] || match[2] : null;
   }
 
-  const promotionalVideoId = getVideoID(promotionalVideoUrl)
-  const videoIds = [
-    promotionalVideoId
-  ]
+  const promotionalVideoId = getVideoID(promotionalVideoUrl);
+  const videoIds = [promotionalVideoId];
 
   useEffect(() => {
-    const tag = document.createElement('script')
-    tag.src = 'https://www.youtube.com/iframe_api'
-    const firstScriptTag = document.getElementsByTagName('script')[0]
-    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag)
+    const tag = document.createElement("script");
+    tag.src = "https://www.youtube.com/iframe_api";
+    const firstScriptTag = document.getElementsByTagName("script")[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-    window.onYouTubeIframeAPIReady = initializeYouTubePlayer
-  }, [])
+    window.onYouTubeIframeAPIReady = initializeYouTubePlayer;
+  }, []);
 
   const initializeYouTubePlayer = () => {
-    const randomVideoId = videoIds[Math.floor(Math.random() * videoIds.length)]
+    const randomVideoId = videoIds[Math.floor(Math.random() * videoIds.length)];
 
-    playerRef.current = new window.YT.Player('youtube-player', {
-      height: '360',
-      width: '640',
+    playerRef.current = new window.YT.Player("youtube-player", {
+      height: "360",
+      width: "640",
       videoId: randomVideoId,
       playerVars: {
         autoplay: 1,
@@ -56,33 +57,33 @@ export default function Component() {
         disablekb: 1,
         fs: 0,
         modestbranding: 1,
-        rel: 0
+        rel: 0,
       },
       events: {
         onReady: onPlayerReady,
         onStateChange: onPlayerStateChange,
-      }
-    })
-  }
+      },
+    });
+  };
 
   const onPlayerReady = (event) => {
-    setVideoLoaded(true)
-    event.target.playVideo()
-  }
+    setVideoLoaded(true);
+    event.target.playVideo();
+  };
 
   const onPlayerStateChange = (event) => {
     if (event.data === window.YT.PlayerState.PLAYING) {
-      setIsPlaying(true)
+      setIsPlaying(true);
       setTimeout(() => {
-        event.target.stopVideo()
-        setIsPlaying(false)
+        event.target.stopVideo();
+        setIsPlaying(false);
 
-        router.push(`/verification`)
-      }, 12)
+        router.push(`/verification`);
+      }, 30000);
     } else {
-      setIsPlaying(false)
+      setIsPlaying(false);
     }
-  }
+  };
 
   return (
     <div className="bg-gray-900 min-h-screen flex flex-col items-center justify-center p-4">
@@ -124,5 +125,5 @@ export default function Component() {
         </motion.div>
       )}
     </div>
-  )
+  );
 }
