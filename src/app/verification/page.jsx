@@ -1,31 +1,34 @@
-'use client'
+"use client";
 
-import { useState, useEffect } from 'react'
-import { motion } from 'framer-motion'
-import { useRouter } from 'next/navigation'
+import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import { useRouter } from "next/navigation";
+import { useUserStore, usePaymentInfoStore } from "../../../store";
 export default function Component() {
-  const [verificationStatus, setVerificationStatus] = useState('waiting')
-  const [showRedirect, setShowRedirect] = useState(false)
-  const router = useRouter()
+  const [verificationStatus, setVerificationStatus] = useState("waiting");
+  const [showRedirect, setShowRedirect] = useState(false);
+  const router = useRouter();
   useEffect(() => {
     const verificationTimer = setTimeout(() => {
-      setVerificationStatus('complete')
-    }, 5000)
+      setVerificationStatus("complete");
+    }, 5000);
 
     const redirectTimer = setTimeout(() => {
-      setShowRedirect(true)
-    }, 7000)
+      setShowRedirect(true);
+    }, 7000);
 
     const pageChangeTimer = setTimeout(() => {
-      router.push('/discounted-payment') 
-    }, 10000)
+      router.push("/discounted-payment");
+    }, 10000);
 
     return () => {
-      clearTimeout(verificationTimer)
-      clearTimeout(redirectTimer)
-      clearTimeout(pageChangeTimer)
-    }
-  }, [router])
+      clearTimeout(verificationTimer);
+      clearTimeout(redirectTimer);
+      clearTimeout(pageChangeTimer);
+    };
+  }, [router]);
+  const { paymentInfo, setPaymentAddress, setPaymentToken, setPaymentAmount } =
+    usePaymentInfoStore();
 
   const containerVariants = {
     waiting: {
@@ -40,7 +43,7 @@ export default function Component() {
         duration: 0.5,
       },
     },
-  }
+  };
 
   const circleVariants = {
     waiting: (i) => ({
@@ -48,7 +51,7 @@ export default function Component() {
       transition: {
         duration: 0.5,
         repeat: Infinity,
-        repeatType: 'reverse',
+        repeatType: "reverse",
         delay: i * 0.1,
       },
     }),
@@ -59,7 +62,7 @@ export default function Component() {
         duration: 0.5,
       },
     },
-  }
+  };
 
   const tickVariants = {
     hidden: { pathLength: 0, opacity: 0 },
@@ -71,18 +74,21 @@ export default function Component() {
         ease: "easeInOut",
       },
     },
-  }
+  };
 
   return (
     <div className="bg-gray-900 min-h-screen flex flex-col items-center justify-center p-4">
-      <h1 className="text-3xl font-bold text-green-400 mb-8">  Original Amount: $80</h1>
-      
+      <h1 className="text-3xl font-bold text-green-400 mb-8">
+        {" "}
+        Original Amount: {paymentInfo.amount}
+      </h1>
+
       <motion.div
         className="bg-gray-800 rounded-lg p-8 shadow-lg mb-8 w-full max-w-2xl aspect-video flex flex-col items-center justify-center"
         variants={containerVariants}
         animate={verificationStatus}
       >
-        {verificationStatus === 'waiting' ? (
+        {verificationStatus === "waiting" ? (
           <div className="flex justify-center items-center space-x-4 mb-8">
             {[0, 1, 2].map((i) => (
               <motion.div
@@ -121,13 +127,15 @@ export default function Component() {
             />
           </motion.svg>
         )}
-        <motion.p 
+        <motion.p
           className="text-3xl font-semibold text-white text-center mt-4"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5 }}
         >
-          {verificationStatus === 'waiting' ? 'Verifying...' : 'Verification Complete!'}
+          {verificationStatus === "waiting"
+            ? "Verifying..."
+            : "Verification Complete!"}
         </motion.p>
       </motion.div>
 
@@ -152,5 +160,5 @@ export default function Component() {
         Link To try out application
       </motion.a>
     </div>
-  )
+  );
 }

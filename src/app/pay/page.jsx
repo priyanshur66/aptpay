@@ -30,7 +30,7 @@ export default function PaymentPage() {
   const [receiveHovered, setReceiveHovered] = useState(false);
   const [walletAddress, setWalletAddress] = useState('0xc3df44663b7541bc5ce2793c12814dad216cdf05855c66381a8cb797e6bf9656')
   const { user } = useUserStore();
-  const { paymentInfo, setPaymentAddress, setPaymentToken } =
+  const { paymentInfo, setPaymentAddress, setPaymentToken,setPaymentAmount } =
     usePaymentInfoStore();
 
   const handleCopyAddress = () => {

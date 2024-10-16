@@ -11,6 +11,7 @@ interface User {
 interface PaymentInfo {
   address: string | null;
   token: string;
+  amount: number | null;
 }
 
 interface UserState {
@@ -26,6 +27,7 @@ interface PaymentInfoState {
   paymentInfo: PaymentInfo | null;
   setPaymentAddress: (address: string | null) => void;
   setPaymentToken: (token: string) => void;
+  setPaymentAmount: (amount: number | null) => void;
 }
 
 export const useUserStore = create<UserState>((set) => ({
@@ -57,12 +59,18 @@ export const usePaymentInfoStore = create<PaymentInfoState>((set) => ({
     set((state) => ({
       paymentInfo: state.paymentInfo
         ? { ...state.paymentInfo, address }
-        : { address, token: "" },
+        : { address, token: "", amount: null },
     })),
   setPaymentToken: (token) =>
     set((state) => ({
       paymentInfo: state.paymentInfo
         ? { ...state.paymentInfo, token }
-        : { address: null, token },
+        : { address: null, token, amount: null },
+    })),
+  setPaymentAmount: (amount) =>
+    set((state) => ({
+      paymentInfo: state.paymentInfo
+        ? { ...state.paymentInfo, amount }
+        : { address: null, token: "", amount },
     })),
 }));

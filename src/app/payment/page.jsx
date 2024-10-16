@@ -2,18 +2,20 @@
 import React, { useState, useEffect } from "react";
 import { useUserStore, usePaymentInfoStore } from "../../../store";
 import { AptosAccount, Types, HexString, AptosClient } from "aptos";
-import { useRouter } from 'next/navigation'
+import { useRouter } from "next/navigation";
 import crypto from "crypto";
 
+
 export default function TokenPayment() {
-  const router = useRouter()
+  
+  const router = useRouter();
   const [selectedToken, setSelectedToken] = useState("");
   const [amount, setAmount] = useState("0");
   const [selectedCurrency, setSelectedCurrency] = useState("apt");
 
   const tokens = ["Token A", "Token B", "Token C"];
   const { user, setDpk } = useUserStore();
-  const { paymentInfo, setPaymentToken } = usePaymentInfoStore();
+  const { paymentInfo, setPaymentToken,setPaymentAddress,setPaymentAmount } = usePaymentInfoStore();
   const NODE_URL = "https://fullnode.testnet.aptoslabs.com/v1";
   const aptosClient = new AptosClient(NODE_URL);
 
@@ -22,6 +24,7 @@ export default function TokenPayment() {
   };
 
   const handleAmountChange = (event) => {
+    setPaymentAmount(event.target.value);
     setAmount(event.target.value);
   };
 
@@ -85,7 +88,7 @@ export default function TokenPayment() {
       const signedTxn = await aptosClient.signTransaction(sender, rawTxn);
       const pendingTxn = await aptosClient.submitTransaction(signedTxn);
       await aptosClient.waitForTransaction(pendingTxn.hash);
-      console.log(pendingTxn.hash)
+      console.log(pendingTxn.hash);
       return pendingTxn.hash;
     } catch (error) {
       console.error("Error in transferLegacyCoin:", error);
@@ -93,9 +96,9 @@ export default function TokenPayment() {
     }
   }
 
-  const handleRouter=()=>{
-    router.push("/getdiscount")
-  }
+  const handleRouter = () => {
+    router.push("/getdiscount");
+  };
 
   useEffect(() => {
     const Fetch = async () => {

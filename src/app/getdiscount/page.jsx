@@ -2,13 +2,17 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { useRouter } from 'next/navigation';
+import { useUserStore, usePaymentInfoStore } from "../../../store";
+
 
 export default function Dashboard() {
-    const router = useRouter();
+  const router = useRouter();
+  const { paymentInfo, setPaymentAddress, setPaymentToken, setPaymentAmount } =
+  usePaymentInfoStore();
   const boxes = [
-    { title: 'Watch ad for a token', price: 80, link: '/watch-Ad' },
-    { title: 'Signup for platform x', price: 50, link: '/platform-x' },
-    { title: 'Try application y', price: 30, link: '/application-y' },
+    { title: 'Watch ad for a token', price: 2, link: '/watch-Ad' },
+    { title: 'Signup for platform x', price: 5, link: '/platform-x' },
+    { title: 'Try application y', price: 7, link: '/application-y' },
   ];
 
   const containerVariants = {
@@ -49,7 +53,7 @@ export default function Dashboard() {
     <div className="bg-gray-900 min-h-screen flex flex-col items-center justify-center p-4">
       <div className="w-full max-w-4xl px-4 sm:px-6 lg:px-8">
         <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-center text-green-400 mb-8 sm:mb-12">
-          ORIGINAL PRICE: $100
+          ORIGINAL PRICE: {paymentInfo.amount}
         </h2>
 
         <motion.div
