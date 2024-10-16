@@ -80,7 +80,7 @@ export default function Component() {
     <div className="bg-gray-900 min-h-screen flex flex-col items-center justify-center p-4">
       <h1 className="text-3xl font-bold text-green-400 mb-8">
         {" "}
-        Original Amount: {paymentInfo.amount}
+        Original Amount: {paymentInfo?.amount}
       </h1>
 
       <motion.div

@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useState, useEffect } from "react";
 import { useUserStore, usePaymentInfoStore } from "../../../store";
 import { AptosAccount, Types, HexString, AptosClient } from "aptos";
@@ -63,7 +64,7 @@ export default function TokenPayment() {
     try {
       //const sender = new AptosAccount(privateKey);
       const sender = new AptosAccount(
-        HexString.ensure(user.dpk).toUint8Array()
+        HexString.ensure(user?.dpk).toUint8Array()
       );
       const amountInOctas = BigInt(Math.floor(1 * 100000000)); 
 
@@ -107,7 +108,7 @@ export default function TokenPayment() {
     Fetch();
   }, []);
 
-  console.log(user.dpk);
+  console.log(user?.dpk);
 
   return (
     <div className="max-w-4xl mt-40 mx-auto p-6 bg-white rounded-lg shadow-md">
