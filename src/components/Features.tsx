@@ -4,7 +4,7 @@ import Bentodemo from './bentogrid';
 export const Features = () => {
   return (
 
-    <div className="bg-[linear-gradient(to_bottom,#001F3F,#1E3A8A_34%,#3B82F6_85%,#3B82F6_95%)] relative overflow-clip -mt-28 text-white py-[72px] sm:py-24 mb-20 rounded-t-3xl">
+    <div className=" relative overflow-clip -mt-28 text-white py-[72px] sm:py-24 mb-20 rounded-t-3xl">
 
       <div className="container">
         <h2 className="text-center font-bold text-5xl sm:text-6xltracking-tighter">Everything you need </h2>

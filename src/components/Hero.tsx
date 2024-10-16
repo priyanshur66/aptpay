@@ -8,7 +8,7 @@ import Auth from './Auth';
 
 export const Hero = () => {
   return (
-    <div className=" text-white rounded py-[72px] sm:py-24 relative overflow-clip"
+    <div className=" text-white rounded py-[72px] sm:py-24 mt-20 relative overflow-clip"
     >
 
         <div className="container relative">

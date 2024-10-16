@@ -49,12 +49,12 @@ export default function PaymentPage() {
 
   return (
     <div className="min-h-screen bg-[linear-gradient(to_bottom,#001F3F,#1E3A8A_34%,#3B82F6_85%,#3B82F6_95%)] relative overflow-clip p-4">
-      <div className="max-w-4xl mt-5 mx-auto bg-slate-300 py-20 rounded-lg shadow-md p-6">
+      <div className="max-w-4xl mt-20 mx-auto bg-slate-300 py-5  rounded-lg shadow-md p-6">
         <div className="flex justify-center space-x-4 mb-8">
           <Dialog>
             <DialogTrigger asChild>
               <Button
-                className={`bg-red-500 rounded-full h-32 w-32 text-xl flex flex-col hover:bg-red-600 text-white transition-transform ${
+                className={`bg-black rounded-full h-32 w-32 text-xl flex flex-col hover:bg-red-600 text-white transition-transform ${
                   payHovered ? "-translate-y-1" : ""
                 }`}
                 onMouseEnter={() => setPayHovered(true)}
@@ -91,7 +91,7 @@ export default function PaymentPage() {
           <Dialog>
             <DialogTrigger asChild>
               <Button
-                className={`bg-green-500 hover:bg-green-600 rounded-full h-32 w-32 text-xl flex flex-col text-white transition-transform ${
+                className={`bg-black hover:bg-green-600 rounded-full h-32 w-32 text-xl flex flex-col text-white transition-transform ${
                   receiveHovered ? "translate-y-1" : ""
                 }`}
                 onMouseEnter={() => setReceiveHovered(true)}
