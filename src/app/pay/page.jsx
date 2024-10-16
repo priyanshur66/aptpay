@@ -28,9 +28,7 @@ export default function PaymentPage() {
   const router = useRouter();
   const [payHovered, setPayHovered] = useState(false);
   const [receiveHovered, setReceiveHovered] = useState(false);
-  const [walletAddress, setWalletAddress] = useState(
-    "0xaS847nr8cnmwcknd0xckh087nhb5"
-  );
+  const [walletAddress, setWalletAddress] = useState('0xc3df44663b7541bc5ce2793c12814dad216cdf05855c66381a8cb797e6bf9656')
   const { user } = useUserStore();
   const { paymentInfo, setPaymentAddress, setPaymentToken } =
     usePaymentInfoStore();
@@ -43,6 +41,11 @@ export default function PaymentPage() {
   const handlePayment = () => {
     router.push("/payment");
   };
+
+  const trimAddress = (address) => {
+    if (!address) return '';
+    return `${address.slice(0, 6)}...${address.slice(-4)}`;
+  }
 
   return (
     <div className="min-h-screen bg-[linear-gradient(to_bottom,#001F3F,#1E3A8A_34%,#3B82F6_85%,#3B82F6_95%)] relative overflow-clip p-4">
@@ -105,6 +108,7 @@ export default function PaymentPage() {
               <div className="grid gap-4 items-center justify-items-center">
                 <QrCode className="h-32 w-32" />
                 <div className="flex items-center space-x-2">
+                <span className="text-sm">{trimAddress(walletAddress)}</span>
                   <span className="text-sm">{user?.publicKey}</span>
                   <Button
                     variant="ghost"

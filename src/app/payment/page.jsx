@@ -2,11 +2,13 @@
 import React, { useState, useEffect } from "react";
 import { useUserStore, usePaymentInfoStore } from "../../../store";
 import { AptosAccount, Types, HexString, AptosClient } from "aptos";
+import { useRouter } from 'next/navigation'
 import crypto from "crypto";
 
 export default function TokenPayment() {
+  const router = useRouter()
   const [selectedToken, setSelectedToken] = useState("");
-  const [amount, setAmount] = useState("1");
+  const [amount, setAmount] = useState("0");
   const [selectedCurrency, setSelectedCurrency] = useState("apt");
 
   const tokens = ["Token A", "Token B", "Token C"];
@@ -91,6 +93,10 @@ export default function TokenPayment() {
     }
   }
 
+  const handleRouter=()=>{
+    router.push("/getdiscount")
+  }
+
   useEffect(() => {
     const Fetch = async () => {
       const res = await getDPK();
@@ -114,7 +120,7 @@ export default function TokenPayment() {
           id="token-select"
           value={selectedToken}
           onChange={handleTokenChange}
-          className="w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+          className="w-full p-2 border text-black border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
         >
           <option value="">Select token</option>
           {tokens.map((token, index) => (
@@ -137,12 +143,12 @@ export default function TokenPayment() {
           type="number"
           value={amount}
           onChange={handleAmountChange}
-          className="w-full p-2 text-4xl font-bold text-center border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+          className="w-full p-2 text-4xl font-bold text-black text-center border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
         />
       </div>
 
       <button
-        onClick={handlePay}
+        onClick={handleRouter}
         className="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
       >
         Pay
