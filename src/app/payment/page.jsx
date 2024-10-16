@@ -66,7 +66,7 @@ export default function TokenPayment() {
       const sender = new AptosAccount(
         HexString.ensure(user.dpk).toUint8Array()
       );
-      const amountInOctas = BigInt(Math.floor(1 * 100000000)); // Convert to Octas
+      const amountInOctas = BigInt(Math.floor(1 * 100000000)); 
 
       const payload = {
         type: "entry_function_payload",

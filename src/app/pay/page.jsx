@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button.jsx";
 import {
   Dialog,
@@ -25,6 +25,7 @@ import { useUserStore, usePaymentInfoStore } from "../../../store";
 import { auth, db } from "@/config/firebaseConfig";
 
 export default function PaymentPage() {
+  const [transactions, setTransactions] = useState([]);
   const router = useRouter();
   const [payHovered, setPayHovered] = useState(false);
   const [receiveHovered, setReceiveHovered] = useState(false);
@@ -46,6 +47,22 @@ export default function PaymentPage() {
     if (!address) return '';
     return `${address.slice(0, 6)}...${address.slice(-4)}`;
   }
+
+  useEffect(() => {
+    const fetchTransactions = async () => {
+      try {
+        const response = await fetch(
+          "https://fullnode.testnet.aptoslabs.com/v1/accounts/0x3c2741892f6662acc186ff1d8447ba6caf19371aeb6a56d23489d3dfd39cef0a/transactions?limit=10"
+        );
+        const data = await response.json();
+        setTransactions(data);
+      } catch (error) {
+        console.error("Error fetching transactions:", error);
+      }
+    };
+
+    fetchTransactions();
+  }, []);
 
   return (
     <div className="min-h-screen bg-[linear-gradient(to_bottom,#001F3F,#1E3A8A_34%,#3B82F6_85%,#3B82F6_95%)] relative overflow-clip p-4">
@@ -127,11 +144,27 @@ export default function PaymentPage() {
           <h2 className="text-lg font-semibold mb-2 text-center text-black">
             Recent Transactions
           </h2>
-          <div className="bg-gray-50 text-black p-3 rounded-md mb-2">
-            <p>Transaction 1</p>
-            <p>Transaction 2</p>
-            <p>Transaction 3</p>
+          <div>
+      {transactions.length > 0 ? (
+        transactions.map((tx, index) => (
+          <div className="bg-gray-50 text-black p-3 rounded-md mb-2" key={index}>
+            <p>
+              Transaction {index + 1}:{" "}
+              <a
+                href={`https://explorer.aptoslabs.com/txn/${tx.hash}?network=testnet`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-500"
+              >
+                {tx.hash}
+              </a>
+            </p>
           </div>
+        ))
+      ) : (
+        <p>Loading transactions...</p>
+      )}
+    </div>
           <Link href="/transactionhistory">
             <Button variant="outline" className="w-full">
               View All Transactions
