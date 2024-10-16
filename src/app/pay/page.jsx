@@ -147,25 +147,25 @@ export default function PaymentPage() {
             Recent Transactions
           </h2>
           <div>
-      {transactions.length > 0 ? (
-        transactions.map((tx, index) => (
-          <div className="bg-gray-50 text-black p-3 rounded-md mb-2" key={index}>
+          {transactions.length > 0 ? (
+            transactions.slice().reverse().map((tx, index) => (
+            <div className="bg-gray-50 text-black p-3 rounded-md mb-2" key={tx.hash}>
             <p>
-              Transaction {index + 1}:{" "}
-              <a
-                href={`https://explorer.aptoslabs.com/txn/${tx.hash}?network=testnet`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-blue-500"
-              >
-                {tx.hash}
-              </a>
-            </p>
-          </div>
-        ))
-      ) : (
-        <p className="text-black ml-4">Loading transactions...</p>
-      )}
+        Transaction {transactions.length - index}:{" "}
+        <a
+          href={`https://explorer.aptoslabs.com/txn/${tx.hash}?network=testnet`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-blue-500 hover:underline"
+        >
+          {tx.hash}
+        </a>
+      </p>
+    </div>
+  ))
+) : (
+  <p className="text-gray-500 ml-4">No transactions to display</p>
+)}
     </div>
           <Link href="/transactionhistory">
             <Button variant="outline" className="w-full">

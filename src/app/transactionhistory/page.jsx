@@ -33,25 +33,29 @@ const SimpleTransactionHistory = ({ initialTransactions }) => {
       </div>
       <ul className="space-y-2">
         <div>
-          {transactions.length > 0 ? (
-            transactions.map((tx, index) => (
-              <div className="bg-gray-50 text-black p-3 rounded-md mb-2" key={index}>
-                <p>
-                  Transaction {index + 1}:{" "}
-                  <a
-                    href={`https://explorer.aptoslabs.com/txn/${tx.hash}?network=testnet`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-blue-500"
-                  >
-                    {tx.hash}
-                  </a>
-                </p>
-              </div>
-            ))
-          ) : (
-            <p>Loading transactions...</p>
-          )}
+        {transactions.length > 0 ? (
+  transactions
+    .slice() // Create a shallow copy to avoid mutating the original array
+    .reverse() // Reverse the array to show the latest transactions at the top
+    .map((tx, index) => (
+      <div className="bg-gray-50 text-black p-3 rounded-md mb-2" key={index}>
+        <p>
+          Transaction {transactions.length - index}:{" "}
+          <a
+            href={`https://explorer.aptoslabs.com/txn/${tx.hash}?network=testnet`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-500"
+          >
+            {tx.hash}
+          </a>
+        </p>
+      </div>
+    ))
+) : (
+  <p>Loading transactions...</p>
+)}
+
         </div>
       </ul>
     </div>
