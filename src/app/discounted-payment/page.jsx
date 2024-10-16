@@ -1,26 +1,28 @@
-'use client'
+"use client";
 
-import { useState, useEffect } from 'react'
-import { motion } from 'framer-motion'
-import { useSearchParams, useRouter } from 'next/navigation'
-
+import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import { useSearchParams, useRouter } from "next/navigation";
+import { useUserStore, usePaymentInfoStore } from "../../../store";
 export default function DiscountSuccessPage() {
-  const searchParams = useSearchParams()
-  const router = useRouter()
-  const [showPayButton, setShowPayButton] = useState(false)
-  const discountedPrice = searchParams.get('price') || '40'
-
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const [showPayButton, setShowPayButton] = useState(false);
+  const discountedPrice = searchParams.get("price") || "40";
+  const { paymentInfo, setPaymentAddress, setPaymentToken, setPaymentAmount } =
+    usePaymentInfoStore();
+  setPaymentAmount(paymentInfo.amount - 2);
   useEffect(() => {
     const timer = setTimeout(() => {
-      setShowPayButton(true)
-    }, 3000)
+      setShowPayButton(true);
+    }, 3000);
 
-    return () => clearTimeout(timer)
-  }, [])
+    return () => clearTimeout(timer);
+  }, []);
 
   const handlePayment = () => {
-    router.push('/payment-completion')
-  }
+    router.push("/payment-completion");
+  };
 
   return (
     <div className="bg-gray-900 min-h-screen flex flex-col items-center justify-center p-4">
@@ -31,7 +33,7 @@ export default function DiscountSuccessPage() {
           animate={{ opacity: 1, scale: 1 }}
           transition={{
             duration: 0.8,
-            ease: "easeOut"
+            ease: "easeOut",
           }}
         >
           UPDATED PRICE: ${discountedPrice}
@@ -40,7 +42,7 @@ export default function DiscountSuccessPage() {
         <motion.div
           className="bg-gray-800 rounded-2xl p-6 sm:p-8 shadow-lg relative overflow-hidden"
           initial={{ height: 0 }}
-          animate={{ height: 'auto' }}
+          animate={{ height: "auto" }}
           transition={{ duration: 0.8, delay: 0.5 }}
         >
           <motion.div
@@ -89,5 +91,5 @@ export default function DiscountSuccessPage() {
         </motion.div>
       </div>
     </div>
-  )
+  );
 }

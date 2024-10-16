@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react'
 import { motion } from 'framer-motion'
 import Script from 'next/script'
 import { useRouter } from 'next/navigation'
+import { useUserStore, usePaymentInfoStore } from "../../../store";
 
 // Placeholder hooks instead of usePaymentAmount and usePromotionalVideoUrlState
 const usePaymentAmount = () => ({ paymentAmount: 80 }); // Mock function for paymentAmount
@@ -18,6 +19,8 @@ export default function Component() {
 
   const { paymentAmount } = usePaymentAmount();
   const { promotionalVideoUrl } = usePromotionalVideoUrlState()
+  const { paymentInfo, setPaymentAddress, setPaymentToken, setPaymentAmount } =
+  usePaymentInfoStore();
   console.log("promotionalVideoUrl", promotionalVideoUrl)
   
   function getVideoID(url) {
@@ -91,7 +94,7 @@ export default function Component() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        Original Amount: ${paymentAmount}
+        Original Amount: ${paymentInfo.amount}
       </motion.h2>
 
       <motion.div
