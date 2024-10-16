@@ -1,36 +1,25 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Aptpay
 
-## Getting Started
+Aptpay is a rewards-driven platform that offers users instant discounts on daily purchases in exchange for participating in promotional campaigns. Through engaging advertisements and tasks, users earn real-time rewards, while service providers and Web3 projects gain a unique channel to expand their customer base.
 
-First, run the development server:
+## Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- **Instant Discounts**: Users receive immediate rewards on purchases after engaging with campaigns (ads or tasks).
+- **Service Provider Incentives**: Providers earn 20% of the total reward value, creating a mutually beneficial system.
+- **Collateral-Free Loans**: Based on transaction data, Aptpay offers loans to service providers with smooth, repayment options.
+- **Web3 User Acquisition**: Web3 projects leverage Aptpay to drive user engagement through familiar ad models (videos/tasks).
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Market Focus
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **India**: Capitalizing on India's price-sensitive market and digital payment infrastructure (UPI).
+- **Web3 Ecosystem**: Connecting Web3 projects with non-crypto users through incentivized campaigns.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Business Model
 
-## Learn More
+- **Transaction Fees**: A small commission is taken from rewards.
+- **Ad Placement Fees**: Advertisers pay to place campaigns on Aptpay.
+- **Loan Interest**: Revenue from interest on collateral-free loans to service providers.
 
-To learn more about Next.js, take a look at the following resources:
+## Vision
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+To create an inclusive, incentive-driven economy that empowers users through rewards and unlocks new growth opportunities for service providers and Web3 projects.
