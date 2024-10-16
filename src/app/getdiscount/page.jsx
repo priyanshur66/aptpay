@@ -10,7 +10,7 @@ export default function Dashboard() {
   const { paymentInfo, setPaymentAddress, setPaymentToken, setPaymentAmount } =
   usePaymentInfoStore();
   const boxes = [
-    { title: 'Watch ad for a token', price: 2, link: '/watch-Ad' },
+    { title: 'Watch ad for about aptos ', price: 2, link: '/watch-Ad' },
     { title: 'Signup for platform x', price: 5, link: '/platform-x' },
     { title: 'Try application y', price: 7, link: '/application-y' },
   ];

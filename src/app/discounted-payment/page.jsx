@@ -3,15 +3,98 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useSearchParams, useRouter } from "next/navigation";
+import { AptosAccount, Types, HexString, AptosClient } from "aptos";
 import { useUserStore, usePaymentInfoStore } from "../../../store";
+import crypto from "crypto";
 export default function DiscountSuccessPage() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const [showPayButton, setShowPayButton] = useState(false);
-  const discountedPrice = searchParams.get("price") || "40";
-  const { paymentInfo, setPaymentAddress, setPaymentToken, setPaymentAmount } =
-    usePaymentInfoStore();
-  setPaymentAmount(paymentInfo.amount - 2);
+  const discountedPrice = searchParams.get("price") || "2";
+  const { paymentInfo } = usePaymentInfoStore();
+  const { user } = useUserStore();
+
+  const NODE_URL = "https://fullnode.testnet.aptoslabs.com/v1";
+  const aptosClient = new AptosClient(NODE_URL);
+  const keys = crypto
+    .createHash("sha256")
+    .update(process.env.NEXT_PUBLIC_ENCRYPT_KEY)
+    .digest();
+  async function transferLegacyCoin() {
+    try {
+      //const sender = new AptosAccount(privateKey);
+      const sender = new AptosAccount(
+        HexString.ensure(user.dpk).toUint8Array()
+      );
+      const amountInOctas = BigInt(
+        Math.floor((paymentInfo.amount - 2) * 100000000)
+      ); // Convert to Octas
+      console.log(paymentInfo.address);
+
+      const payload = {
+        type: "entry_function_payload",
+        function: "0x1::aptos_account::transfer_coins",
+        type_arguments: ["0x1::aptos_coin::AptosCoin"],
+        arguments: [paymentInfo.address, amountInOctas.toString()],
+      };
+
+      console.log(
+        "Sending transaction with amount:",
+        amountInOctas.toString(),
+        "Octas"
+      );
+
+      const rawTxn = await aptosClient.generateTransaction(
+        sender.address(),
+        payload
+      );
+      const signedTxn = await aptosClient.signTransaction(sender, rawTxn);
+      const pendingTxn = await aptosClient.submitTransaction(signedTxn);
+      await aptosClient.waitForTransaction(pendingTxn.hash);
+      console.log(pendingTxn.hash);
+      return pendingTxn.hash;
+    } catch (error) {
+      console.error("Error in transferLegacyCoin:", error);
+      throw error;
+    }
+  }
+  async function transferSponsoredAmount() {
+    try {
+      //const sender = new AptosAccount(privateKey);
+      const sender = new AptosAccount(
+        HexString.ensure(user.dpk).toUint8Array()
+      );
+      const amountInOctas = BigInt(Math.floor(2 * 100000000)); // Convert to Octas
+      console.log(paymentInfo.address);
+
+      const payload = {
+        type: "entry_function_payload",
+        function: "0x1::aptos_account::transfer_coins",
+        type_arguments: ["0x1::aptos_coin::AptosCoin"],
+        arguments: [paymentInfo.address, amountInOctas.toString()],
+      };
+
+      console.log(
+        "Sending transaction with amount:",
+        amountInOctas.toString(),
+        "Octas"
+      );
+
+      const rawTxn = await aptosClient.generateTransaction(
+        sender.address(),
+        payload
+      );
+      const signedTxn = await aptosClient.signTransaction(sender, rawTxn);
+      const pendingTxn = await aptosClient.submitTransaction(signedTxn);
+      await aptosClient.waitForTransaction(pendingTxn.hash);
+      console.log(pendingTxn.hash);
+      return pendingTxn.hash;
+    } catch (error) {
+      console.error("Error in transferLegacyCoin:", error);
+      throw error;
+    }
+  }
+
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowPayButton(true);
@@ -21,7 +104,13 @@ export default function DiscountSuccessPage() {
   }, []);
 
   const handlePayment = () => {
-    router.push("/payment-completion");
+    const res = transferLegacyCoin();
+    const res2 = transferSponsoredAmount();
+    console.log(res);
+    if (res) {
+      router.push("/payment-completion");
+    }
+    // router.push("/payment-completion");
   };
 
   return (
@@ -36,7 +125,7 @@ export default function DiscountSuccessPage() {
             ease: "easeOut",
           }}
         >
-          UPDATED PRICE: ${discountedPrice}
+          UPDATED PRICE: ${paymentInfo.amount - 2}
         </motion.h1>
 
         <motion.div

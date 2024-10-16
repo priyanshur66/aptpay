@@ -78,7 +78,7 @@ export default function Component() {
         setIsPlaying(false)
 
         router.push(`/verification`)
-      }, 12000)
+      }, 12)
     } else {
       setIsPlaying(false)
     }

@@ -5,17 +5,16 @@ import { AptosAccount, Types, HexString, AptosClient } from "aptos";
 import { useRouter } from "next/navigation";
 import crypto from "crypto";
 
-
 export default function TokenPayment() {
-  
   const router = useRouter();
   const [selectedToken, setSelectedToken] = useState("");
   const [amount, setAmount] = useState("0");
   const [selectedCurrency, setSelectedCurrency] = useState("apt");
 
-  const tokens = ["Token A", "Token B", "Token C"];
+  const tokens = ["APT", "USDC", "Token C"];
   const { user, setDpk } = useUserStore();
-  const { paymentInfo, setPaymentToken,setPaymentAddress,setPaymentAmount } = usePaymentInfoStore();
+  const { paymentInfo, setPaymentToken, setPaymentAddress, setPaymentAmount } =
+    usePaymentInfoStore();
   const NODE_URL = "https://fullnode.testnet.aptoslabs.com/v1";
   const aptosClient = new AptosClient(NODE_URL);
 

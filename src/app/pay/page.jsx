@@ -19,7 +19,6 @@ import {
   Copy,
 } from "lucide-react";
 import Link from "next/link";
-import { Navbar } from "@/components/Navbar";
 import { useRouter } from "next/navigation";
 import { useUserStore, usePaymentInfoStore } from "../../../store";
 import { auth, db } from "@/config/firebaseConfig";
@@ -29,10 +28,9 @@ export default function PaymentPage() {
   const router = useRouter();
   const [payHovered, setPayHovered] = useState(false);
   const [receiveHovered, setReceiveHovered] = useState(false);
-  const [walletAddress, setWalletAddress] = useState('0xc3df44663b7541bc5ce2793c12814dad216cdf05855c66381a8cb797e6bf9656')
+  const [walletAddress, setWalletAddress] = useState('0xc3df44663b7541bc5ce2793c12814dad216cdf05855c66381a8cb797e6bf9656');
   const { user } = useUserStore();
-  const { paymentInfo, setPaymentAddress, setPaymentToken,setPaymentAmount } =
-    usePaymentInfoStore();
+  const { paymentInfo, setPaymentAddress, setPaymentToken, setPaymentAmount } = usePaymentInfoStore();
 
   const handleCopyAddress = () => {
     navigator.clipboard.writeText(walletAddress);
@@ -46,6 +44,11 @@ export default function PaymentPage() {
   const trimAddress = (address) => {
     if (!address) return '';
     return `${address.slice(0, 6)}...${address.slice(-4)}`;
+  }
+
+  const handleSetPaymentAddress = (address) => {
+    setPaymentAddress(address);
+    setWalletAddress(address);
   }
 
   useEffect(() => {
@@ -77,7 +80,7 @@ export default function PaymentPage() {
                 onMouseEnter={() => setPayHovered(true)}
                 onMouseLeave={() => setPayHovered(false)}
               >
-                <ArrowUpCircle className=" h-8 w-8" />
+                <ArrowUpCircle className="h-8 w-8" />
                 Pay
               </Button>
             </DialogTrigger>
@@ -91,7 +94,7 @@ export default function PaymentPage() {
                   Scan QR Code
                 </Button>
                 <Input
-                  onchange={(e) => setPaymentAddress(e.target.value)}
+                  onChange={(e) => handleSetPaymentAddress(e.target.value)}
                   placeholder="Enter wallet address"
                   className="rounded-xl"
                 />
@@ -114,7 +117,7 @@ export default function PaymentPage() {
                 onMouseEnter={() => setReceiveHovered(true)}
                 onMouseLeave={() => setReceiveHovered(false)}
               >
-                <ArrowDownCircle className=" h-8 w-8" />
+                <ArrowDownCircle className="h-8 w-8" />
                 Receive
               </Button>
             </DialogTrigger>
@@ -125,8 +128,7 @@ export default function PaymentPage() {
               <div className="grid gap-4 items-center justify-items-center">
                 <QrCode className="h-32 w-32" />
                 <div className="flex items-center space-x-2">
-                <span className="text-sm">{trimAddress(walletAddress)}</span>
-                  <span className="text-sm">{user?.publicKey}</span>
+                  <span className="text-sm">{trimAddress(walletAddress)}</span>
                   <Button
                     variant="ghost"
                     size="icon"
