@@ -95,7 +95,7 @@ export default function Component() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        Original Amount: ${paymentInfo.amount}
+        Original Amount: {paymentInfo.amount} Apt
       </motion.h2>
 
       <motion.div

@@ -164,7 +164,7 @@ export default function PaymentPage() {
           </div>
         ))
       ) : (
-        <p>Loading transactions...</p>
+        <p className="text-black ml-4">Loading transactions...</p>
       )}
     </div>
           <Link href="/transactionhistory">

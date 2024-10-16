@@ -127,7 +127,7 @@ export default function DiscountSuccessPage() {
             ease: "easeOut",
           }}
         >
-          UPDATED PRICE: ${paymentInfo.amount - 2}
+          UPDATED PRICE: {paymentInfo.amount - 2}Apt
         </motion.h1>
 
         <motion.div
@@ -156,7 +156,7 @@ export default function DiscountSuccessPage() {
               animate={{ scale: [1, 1.2, 1] }}
               transition={{ duration: 0.5, delay: 2 }}
             >
-              ${discountedPrice}
+              {discountedPrice} Apt
             </motion.span>
           </motion.p>
 

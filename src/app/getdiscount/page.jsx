@@ -11,8 +11,8 @@ export default function Dashboard() {
   usePaymentInfoStore();
   const boxes = [
     { title: 'Watch ad for about aptos ', price: 2, link: '/watch-Ad' },
-    { title: 'Signup for platform x', price: 5, link: '/platform-x' },
-    { title: 'Try application y', price: 7, link: '/application-y' },
+    { title: 'Signup for platform x', price: 5, link: '#' },
+    { title: 'Try application y', price: 7, link: '#' },
   ];
 
   const containerVariants = {
@@ -71,7 +71,7 @@ export default function Dashboard() {
               onClick={() => handleBoxClick(box.link)}
             >
               <h3 className="text-lg sm:text-xl font-semibold text-white mb-4">{box.title}</h3>
-              <p className="text-2xl sm:text-3xl font-bold text-green-400">${box.price}</p>
+              <p className="text-2xl sm:text-3xl font-bold text-green-400">{box.price} Apt</p>
               <div className="mt-4 h-2 bg-gray-700 rounded overflow-hidden">
                 <motion.div
                   className="h-full bg-blue-500"
