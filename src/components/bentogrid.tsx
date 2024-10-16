@@ -99,7 +99,7 @@ const CardWithEffect = ({ children }: { children: React.ReactNode }) => {
             height: '300px',
             top: mousePosition.y - 150,
             left: mousePosition.x - 150,
-            background: '#5D2CA8',
+            background: '#144bd8',
             filter: 'blur(100px)',
             transform: 'translate(-0%, -0%)',
             zIndex: 10, // Ensure the effect is on top
@@ -167,8 +167,8 @@ const AWSIcon = () => {
 
       
       <div className="text-left p-6 mt-4">
-        <h1 className="text-white text-2xl font-bold mb-2">Group Health Goals</h1>
-        <p className="text-gray-400 text-lg">Admins create groups and set customized health goals for members.</p>
+        <h1 className="text-white text-2xl font-bold mb-2">Zero Registration for Service Providers</h1>
+        <p className="text-gray-400 text-lg">Service providers can leverage Promopay without needing to register. With India&apos;s UPI system already in place, integrating Promopay into existing payment methods is effortless, incentivizing providers with a percentage of user rewards.</p>
       </div>
     </div>
   );
@@ -211,17 +211,17 @@ const BentoBox1 = () => {
           <div className="flex flex-col justify-between h-full">
             <div className="mb-4 px-6 mt-6">
               <div className="flex justify-between items-center mb-6 pb-2">
-                <h2 className="text-white/70 text-xl">Health Data</h2>
+                <h2 className="text-white/70 text-xl">Advertisement Data</h2>
                 <div className="flex items-center">
                   <div className="h-1 bg-black w-8 rounded-lg"></div>
-                  <span className="ml-2 text-white/70 text-sm">Daily Growth</span>
+                  <span className="ml-2 text-white/70 text-sm">Daily Earns</span>
                 </div>
               </div>
               <div ref={chartRef} className="relative w-full mt-12" style={{ height: chartHeight }}>
                 <svg viewBox={`0 0 ${chartWidth} ${chartHeight}`} className="w-full h-full pl-11">
                   <defs>
                     <linearGradient id="gradient" x1="0" x2="0" y1="0" y2="1">
-                      <stop offset="0%" stopColor="#5D2CA8" />
+                      <stop offset="0%" stopColor="#144bd8" />
                       <stop offset="100%" stopColor="transparent" />
                     </linearGradient>
                   </defs>
@@ -237,7 +237,7 @@ const BentoBox1 = () => {
                   />
                   <motion.polyline
                     fill="none"
-                    stroke="#5D2CA8"
+                    stroke="#144bd8"
                     strokeWidth="3"
                     className=""
                     points={data
@@ -266,8 +266,8 @@ const BentoBox1 = () => {
               </div>
             </div>
             <div className="text-left p-6 mt-4">
-              <h1 className="text-white text-2xl font-bold mb-2">Admin Rewards</h1>
-              <p className="text-white/70 text-lg"> Admins earn a percentage of the joining fee by keeping group activities fun and innovative.</p>
+              <h1 className="text-white text-2xl font-bold mb-2">Instant Rewards on Daily Purchases</h1>
+              <p className="text-white/70 text-lg"> Earn discounts instantly by participating in short promotional campaigns. Whether watching a 15-30 second video or completing simple tasks, Promopay adjusts the reward directly into your purchase, giving you savings on the go.</p>
             </div>
           </div>
         </CardWithEffect>
@@ -276,8 +276,8 @@ const BentoBox1 = () => {
             <div className="flex flex-col justify-center h-full">
               <LogoBeam />
               <div className="text-left p-6">
-                <h1 className="text-white text-2xl font-bold mb-2">Incentivized Participation</h1>
-                <p className="text-white/70 text-lg">Users pay a monthly fee, which is redistributed based on goal completion.</p>
+                <h1 className="text-white text-2xl font-bold mb-2">Flexible Campaign Choices</h1>
+                <p className="text-white/70 text-lg">Choose the type of promotional activity that suits your time and situation. From short ads to quick tasks, Promopay offers various ways to earn rewards while ensuring a seamless user experience.</p>
               </div>
             </div>
           </CardWithEffect>

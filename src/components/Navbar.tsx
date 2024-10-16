@@ -6,31 +6,32 @@ import Link from 'next/link';
 export const Navbar = () => {
   return (
     <>
-    <div className="bg-black opacity-90">
+    <div className="bg-black opacity-95% m-5 rounded-lg">
       <div className="px-4">
         <div className="container bg-black opacity-90">
-          <div className="py-4 flex items-center justify-between">
+          <div className="py-4 flex items-center justify-between ml-10">
           <Link href="\">
             <div className="relative">
             
-              <div className='absolute w-full top-2 bottom-0  '></div>
+              <div className='absolute w-full top-2 bottom-0 text-2xl font-bold '></div>
               
-                <img 
+                {/* <img 
                   src='https://res.cloudinary.com/dxn4bwg6u/image/upload/v1728612664/smart-watch-icon-vector-fitness-gym-concept-thin-line-illustration-editable-stroke-linear-sign-use-web-mobile-193468610_vamgri.jpg' 
                   height={50} 
                   width={50} 
                   className='rounded-full ml-10'
                 />
-                
+                 */}
+                 APT Pay
               </div>
               </Link>
               <nav className='text-white gap-6 items-center hidden sm:flex'>
-                <button className='bg-white py-2 px-8 mr-10 rounded-lg text-black'>Connect wallet</button>
+                <button className='bg-white py-2 px-8 mr-10 rounded-lg text-black'>Connect Aptos</button>
               </nav>
+            </div>
           </div>
         </div>
       </div>
-    </div>
     </>
   )
 };

@@ -25,10 +25,16 @@ import { useUserStore } from "../../store"; // Update this import path
 function Auth() {
   const router = useRouter();
   const { user, setUser, setPublicKey } = useUserStore();
+  const aptosConfig = new AptosConfig({ network: Network.TESTNET });
+  const aptos = new Aptos(aptosConfig);
 
+  const NODE_URL = "https://fullnode.testnet.aptoslabs.com/v1";
   const crypto = require("crypto");
   const algorithm = "aes-256-cbc";
-  const key = crypto.createHash("sha256").update("KEY_TEST").digest();
+  const key = crypto
+    .createHash("sha256")
+    .update(process.env.NEXT_PUBLIC_ENCRYPT_KEY)
+    .digest();
   const iv = crypto.randomBytes(16);
 
   function encrypt(text) {
@@ -39,7 +45,7 @@ function Auth() {
   }
 
   const getUserAWallet = async () => {
-   // if (!user?.email) return;
+    // if (!user?.email) return;
     try {
       const newAccount = new AptosAccount();
       const collectionRef = collection(db, "testWalletUsers");
@@ -67,22 +73,44 @@ function Auth() {
 
   async function handleUserLogin() {
     try {
-      console.log("callesd");
+      console.log("called");
       const usersRef = collection(db, "testWalletUsers");
       const q = query(usersRef, where("email", "==", auth.currentUser.email));
       const querySnapshot = await getDocs(q);
-      console.log(querySnapshot.docs);
-      if (querySnapshot.docs.length == 0) {
+  
+      if (querySnapshot.empty) {
         console.log("User does not exist");
-
+  
         const res = await getUserAWallet();
         console.log(res);
-        if (res) {
-          router.push("/pay");
+  
+        // Fetch the newly created user data
+        const newUserSnapshot = await getDocs(q);
+        if (!newUserSnapshot.empty) {
+          const newUserData = newUserSnapshot.docs[0].data();
+          setUser({
+            email: auth.currentUser.email,
+            publicKey: newUserData.publicKey,
+            encData: newUserData.encryptedData,
+            iv: newUserData.iv,
+          });
+          console.log(res);
+          if (res) {
+            router.push("/pay");
+          }
+        } else {
+          console.error("Failed to retrieve new user data");
         }
-        //return true;
       } else {
         if (auth.currentUser.email) {
+          const userData = querySnapshot.docs[0].data();
+          console.log(userData.publicKey);
+          setUser({
+            email: auth.currentUser.email,
+            publicKey: userData.publicKey,
+            encData: userData.encryptedData,
+            iv: userData.iv,
+          });
           router.push("/pay");
         }
       }
@@ -96,8 +124,9 @@ function Auth() {
   const signInWithGoogle = async () => {
     try {
       const res = await signInWithPopup(auth, googleAuthProvider);
+
       if (res.user) {
-        setUser({ email: res.user.email, publicKey: "" });
+        setUser({ email: res.user.email, publicKey: res.user.publicKey });
         //router.push("/pay");
       }
     } catch (error) {
@@ -117,9 +146,9 @@ function Auth() {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       if (currentUser?.email) {
-        setUser({ email: currentUser.email, publicKey: "" });
+        setUser({ email: currentUser.email, publicKey: currentUser.publicKey });
         console.log("current user is ", auth.currentUser);
-        console.log("user is ",user);
+        console.log("user is ", user);
         handleUserLogin();
         //router.push("/pay");
         // Optionally, you can fetch the user's public key from Firestore here

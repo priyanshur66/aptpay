@@ -21,12 +21,8 @@ export const LogoTicker = () => {
   return(
     <div className="bg-black text-white py-[72px] sm:py-24">
       <div className="container">
-        <h2 className="text-2xl text-center text-white/70 mb-5">Boost Wellness Through Gamified Goals</h2>
-        
-        
-        
+        <h2 className="text-4xl text-center font-bold -mt-16 text-white/70 mb-5">Boost Wellness Through Gamified Goals</h2>
       </div>
-
     </div>
   )
 };
